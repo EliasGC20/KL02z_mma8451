@@ -1,9 +1,14 @@
-// Realizar un proyecto que utilice los leds RGB del microcontrolador FRDM-KL02Z realizado de la siguiente manera:
-// V ON verde - v OFF verde
-// R ON rojo - r OFF rojo
-// A ON azul - a OFF azul
+/*
+--> Realizar un proyecto que utilice los leds RGB del microcontrolador FRDM-KL02Z realizado de la siguiente manera:
+ V ON verde - v OFF verde
+ R ON rojo - r OFF rojo
+ A ON azul - a OFF azul
+--> Mostrar los datos arrojados por el acelerometro MMA8451q de la siguiente manera:
+ X o x ilustra valores y grados del eje X
+ Y o y ilustra valores y grados del eje Y
+ Z o z ilustra valores y grados del eje Z
 
-
+*/
 
 #include <stdio.h>
 #include "board.h"
@@ -55,13 +60,12 @@ int main(void) {
     PRINTF("V: ON <---> v: OFF. Led Verde\r\n");
     PRINTF("A: ON <---> a: OFF. Led Azul\r\n");
     PRINTF("M buscar acelerometro \r\n");
-    printf("C: Modo Activo\r\n");
-    printf("c: Modo StandBy\r\n");
     printf("x o X: Mostrar valores del eje x\r\n");
     printf("y o Y: Mostrar valores del eje y\r\n");
     printf("z o Z: Mostrar valores del eje z\r\n");
 
 
+   i2c0MasterWriteByte(MMA851_I2C_DEVICE_ADDRESS, CTRL_REG1, 0x01); //Mantiene el acelerometro en estado activo
 
     while(1) {
         if(uart0CuantosDatosHayEnBuffer()>0){
@@ -140,14 +144,7 @@ int main(void) {
                     break;
 
 
-                  case 'T': //Modo Activo
-                    i2c0MasterWriteByte(MMA851_I2C_DEVICE_ADDRESS, CTRL_REG1, 0x01);
-                                       break;
-
-                  case 't':  //Modo Standby
-                    i2c0MasterWriteByte(MMA851_I2C_DEVICE_ADDRESS, CTRL_REG1, 0x00);
-                                       break;
-                }
+ }
 
             }else{
                 printf("error\r\n");
